@@ -6,7 +6,7 @@
   <title>Amit App</title>
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 
@@ -27,6 +27,13 @@
         </br></br>
         <button id="mapButton" class="waves-effect waves-light btn">Load Map</button>
 
+
+        <input placeholder="start location" id="src-address" type="text" class="autocomplete">
+        <label for="src-address">Start</label>
+
+        <input placeholder="destination location" id="dst-address" type="text" class="autocomplete">
+        <label for="dst-address">Destination</label>
+
         <div id="app"></div>
 
       </div>
@@ -41,7 +48,7 @@
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   <script src="scripts/axios/dist/axios.min.js"></script>
   <script src="scripts/handlebars/dist/handlebars.min.js"></script>
   <script src="scripts/vanilla-router/dist/vanilla-router.min.js"></script>
