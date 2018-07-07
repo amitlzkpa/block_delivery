@@ -1,6 +1,8 @@
-window.addEventListener('load', () => {
+$(document).ready(() => {
+	
 	const el = $('#app');
 	const errorTemplate = Handlebars.compile($('#error-template').html());
+	const reqDeliveryTemplate = Handlebars.compile($('#reqest-delivery-template').html());
 
 
 	const APP_ID = 'JV3aky6KwOlRaB9UDq49';
@@ -19,6 +21,11 @@ window.addEventListener('load', () => {
 		},
 	});
 
+	router.add('/', () => {
+		let html = reqDeliveryTemplate();
+		el.html(html);
+	});
+
 
 	var platform = new H.service.Platform({
 	  'app_id': APP_ID,
@@ -34,17 +41,17 @@ window.addEventListener('load', () => {
 	var $mapContainer = $('#mapContainer');
 
 	function loadMap() {
-		$mapContainer.empty();
-		// Instantiate (and display) a map object:
-		map = new H.Map(
-			$mapContainer[0],
-			defaultLayers.normal.map,
-			{
-				zoom: zoomLvl,
-				center: { lat: myLat, lng: myLong }
-			});
-		$('#latitude').val(myLat);
-		$('#longitude').val(myLong);
+		// $mapContainer.empty();
+		// // Instantiate (and display) a map object:
+		// map = new H.Map(
+		// 	$mapContainer[0],
+		// 	defaultLayers.normal.map,
+		// 	{
+		// 		zoom: zoomLvl,
+		// 		center: { lat: myLat, lng: myLong }
+		// 	});
+		// $('#latitude').val(myLat);
+		// $('#longitude').val(myLong);
 	}
 
 	navigator.geolocation.getCurrentPosition(
@@ -114,6 +121,6 @@ window.addEventListener('load', () => {
     	}, delay);
     })
 
-	// router.navigateTo('');
+	router.navigateTo('');
 	// el.html("Hi there!");
 });

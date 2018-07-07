@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Amit App</title>
+  <title>Request Delivery</title>
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
@@ -11,41 +11,64 @@
 </head>
 
 <body>
-
   <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
 
-        <div id="mapContainer" style="width: 100%; height: 600px;"></div>
+    <!-- block -->
 
-        </br>
-
-        <input placeholder="0" id="latitude" type="text">
-        <label for="latitude">Latitude</label>
-        <input placeholder="0" id="longitude" type="text">
-        <label for="longitude">Longitude</label>
-        </br></br>
-        <button id="mapButton" class="waves-effect waves-light btn">Load Map</button>
-
-
-        <input placeholder="start location" id="src-address" type="text" class="autocomplete">
-        <label for="src-address">Start</label>
-
-        <input placeholder="destination location" id="dst-address" type="text" class="autocomplete">
-        <label for="dst-address">Destination</label>
-
-        <div id="app"></div>
-
+    <script id="error-template" type="text/x-handlebars-template">
+      <div style="height:250px;">
+        <h2 class="center-align">{{title}}</h2>
+        <h5 class="center-align">{{message}}</h5>
       </div>
-    </div>
+    </script>
+
+    <!-- block -->
+
+    <script id="reqest-delivery-template" type="text/x-handlebars-template">
+        <div class="row">
+          <div class="col-lg-12">
+            
+            <input placeholder="type start address here..." id="src-address" type="text" class="autocomplete">
+            <label for="src-address">Start Address</label>
+
+            <input placeholder="type destrination address here..." id="dst-address" type="text" class="autocomplete">
+            <label for="dst-address">Destination Address</label>
+
+            <input placeholder="enter how much you are willing to pay here" id="amount" type="text">
+            <label for="amount">Amount</label>
+
+            </br></br>
+
+            <div class="input-field col s12">
+              <select>
+                <option value="" disabled selected>Ride Size</option>
+                <option value="1">Bike</option>
+                <option value="2">Car</option>
+                <option value="2">SUV</option>
+                <option value="3">Truck</option>
+              </select>
+              <label>Materialize Select</label>
+            </div>
+
+            </br></br>
+            <button id="mapButton" class="waves-effect waves-light btn">Load Map</button>
+
+          </div>
+        </div>
+    </script>
+
+
+  <!-- container end -->
+  <div id="app"></div>
   </div>
 
-  <script id="error-template" type="text/x-handlebars-template">
-    <div style="height:250px;">
-      <h2 class="center-align">{{title}}</h2>
-      <h5 class="center-align">{{message}}</h5>
-    </div>
-  </script>
+  <!-- block -->
+
+
+  <!-- block -->
+
+
+  <!-- block -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
@@ -54,11 +77,23 @@
   <script src="scripts/vanilla-router/dist/vanilla-router.min.js"></script>
 
 
+
   <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css" />
   <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
   <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
   <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
   <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
   <script src="js/app.js"></script>
+
+<script type="text/javascript">
+
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+
+</script>
+
+
+
 </body>
 </html>
