@@ -4,6 +4,60 @@ $(document).ready(() => {
 	const errorTemplate = Handlebars.compile($('#error-template').html());
 	const reqDeliveryTemplate = Handlebars.compile($('#reqest-delivery-template').html());
 
+	reqDeliveryTemplate.init = () => {
+		let $srcInpBox = $('#src-address');
+
+
+	    var delay = 0;
+		var srcTimer;
+	    $srcInpBox.bind('input', function() {
+	    	let v = $(this).val();
+	    	if(v.length < 3) return;
+	    	window.clearTimeout(srcTimer);
+	    	srcTimer = window.setTimeout(async () => {
+	    		let resp = await $.get(`http://autocomplete.geocoder.cit.api.here.com/6.2/suggest.json?query=${v}&app_id=${APP_ID}&app_code=${APP_CODE}`);
+	    		let suggestions = resp.suggestions;
+	    		let ss = suggestions.reduce((a, b) => {
+	    			a[b.label] = null;
+	    			return a;
+	    		}, {});
+	    		$('#src-address').autocomplete({
+	    			data: ss,
+					onAutocomplete: function(val) {
+						console.log(val);
+					},
+				});
+
+	    	}, delay);
+	    })
+
+
+	    let $dstInpBox = $('#dst-address');
+
+		var dstTimer;
+	    $dstInpBox.bind('input', function() {
+	    	let v = $(this).val();
+	    	if(v.length < 3) return;
+	    	window.clearTimeout(dstTimer);
+	    	dstTimer = window.setTimeout(async () => {
+	    		let resp = await $.get(`http://autocomplete.geocoder.cit.api.here.com/6.2/suggest.json?query=${v}&app_id=${APP_ID}&app_code=${APP_CODE}`);
+	    		let suggestions = resp.suggestions;
+	    		let ss = suggestions.reduce((a, b) => {
+	    			a[b.label] = null;
+	    			return a;
+	    		}, {});
+	    		$('#dst-address').autocomplete({
+	    			data: ss,
+					onAutocomplete: function(val) {
+						console.log(val);
+					},
+				});
+
+	    	}, delay);
+	    })
+
+	}
+
 
 	const APP_ID = 'JV3aky6KwOlRaB9UDq49';
 	const APP_CODE = 'V0lXUTYhyEqnV5A_t6fCxg';
@@ -24,6 +78,7 @@ $(document).ready(() => {
 	router.add('/', () => {
 		let html = reqDeliveryTemplate();
 		el.html(html);
+		reqDeliveryTemplate.init();
 	});
 
 
@@ -75,52 +130,10 @@ $(document).ready(() => {
 
 
 
-
-	var srcTimer;
-    var delay = 0;
-    $('#src-address').bind('input', function() {
-    	let v = $(this).val();
-    	if(v.length < 3) return;
-    	window.clearTimeout(srcTimer);
-    	srcTimer = window.setTimeout(async () => {
-    		let resp = await $.get(`http://autocomplete.geocoder.cit.api.here.com/6.2/suggest.json?query=${v}&app_id=${APP_ID}&app_code=${APP_CODE}`);
-    		let suggestions = resp.suggestions;
-    		let ss = suggestions.reduce((a, b) => {
-    			a[b.label] = null;
-    			return a;
-    		}, {});
-    		$('#src-address').autocomplete({
-    			data: ss,
-				onAutocomplete: function(val) {
-					console.log(val);
-				},
-			});
-
-    	}, delay);
-    })
-
-	var dstTimer;
-    $('#dst-address').bind('input', function() {
-    	let v = $(this).val();
-    	if(v.length < 3) return;
-    	window.clearTimeout(dstTimer);
-    	dstTimer = window.setTimeout(async () => {
-    		let resp = await $.get(`http://autocomplete.geocoder.cit.api.here.com/6.2/suggest.json?query=${v}&app_id=${APP_ID}&app_code=${APP_CODE}`);
-    		let suggestions = resp.suggestions;
-    		let ss = suggestions.reduce((a, b) => {
-    			a[b.label] = null;
-    			return a;
-    		}, {});
-    		$('#dst-address').autocomplete({
-    			data: ss,
-				onAutocomplete: function(val) {
-					console.log(val);
-				},
-			});
-
-    	}, delay);
-    })
-
+	// let html = reqDeliveryTemplate();
+	// el.html(html);
 	router.navigateTo('');
 	// el.html("Hi there!");
+
+
 });
