@@ -7,7 +7,6 @@ $(document).ready(() => {
 	reqDeliveryTemplate.init = () => {
 		let $srcInpBox = $('#src-address');
 
-
 	    var delay = 0;
 		var srcTimer;
 	    $srcInpBox.bind('input', function() {
@@ -56,6 +55,17 @@ $(document).ready(() => {
 
 	    	}, delay);
 	    })
+
+
+	    $('#req-button').on('click', async (e) => {
+	    	e.preventDefault();
+	    	let srcLoc = $srcInpBox.val();
+	    	let dstLoc = $dstInpBox.val();
+	    	let amount = $('#amount').val();
+	    	let rideSize = $('#ride-size').val();
+	    	await $.post(`/delivery/request?src=${srcLoc}&dst=${dstLoc}&amt=${amount}&rSz=${rideSize}`);
+	    	console.log('posteddd');
+	    });
 
 	}
 
