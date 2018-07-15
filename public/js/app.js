@@ -5,7 +5,15 @@ $(document).ready(() => {
 	const reqDeliveryTemplate = Handlebars.compile($('#reqest-delivery-template').html());
 
 	reqDeliveryTemplate.init = () => {
+
+
+	    let $dstInpBox = $('#dst-address');
 		let $srcInpBox = $('#src-address');
+	    let $messageBox = $('#message');
+	    let $currBox = $('#currency');
+		
+
+
 
 	    var delay = 0;
 		var srcTimer;
@@ -30,9 +38,6 @@ $(document).ready(() => {
 
 	    	}, delay);
 	    })
-
-
-	    let $dstInpBox = $('#dst-address');
 
 		var dstTimer;
 	    $dstInpBox.bind('input', function() {
@@ -63,8 +68,11 @@ $(document).ready(() => {
 	    	let dstLoc = $dstInpBox.val();
 	    	let amount = $('#amount').val();
 	    	let rideSize = $('#ride-size').val();
+	    	let currency = $currBox.val();
+	    	let message = $messageBox.val();
+	    	console.log(`Request from ${srcLoc} to ${dstLoc} for ${amount} ${currency}.`);
+	    	// send to contract
 	    	await $.post(`/delivery/request?src=${srcLoc}&dst=${dstLoc}&amt=${amount}&rSz=${rideSize}`);
-	    	console.log('posteddd');
 	    });
 
 	}

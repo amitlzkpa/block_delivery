@@ -37,11 +37,10 @@ app.post('/delivery/request', async (req, res) => {
   	resp = await addrToCoords(dst);
   	let dstCoord = resp.Response.View[0].Result[0].Location.NavigationPosition;
   	console.log(`From: ${srcCoord} \t To: ${dstCoord}`);
-    // res.setHeader('Content-Type', 'application/json');
-    // res.send(data);
-    // res.send('{ "iam": "legend" }');
+    res.send('OK');
   } catch (error) {
   	console.log(error);
+  	// res.send('ERR');
   }
 });
 
