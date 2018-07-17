@@ -29,14 +29,8 @@ app.get('/api/maps/autocomplete', async (req, res) => {
 
 app.post('/delivery/request', async (req, res) => {
   try {
-  	// console.log('Received request delivery req');
-  	let {src, dst, amt, rSz} = req.query;
-  	let resp;
-  	resp = await addrToCoords(src);
-  	let srcCoord = resp.Response.View[0].Result[0].Location.NavigationPosition;
-  	resp = await addrToCoords(dst);
-  	let dstCoord = resp.Response.View[0].Result[0].Location.NavigationPosition;
-  	console.log(`From: ${srcCoord} \t To: ${dstCoord}`);
+    let addr = req.query.addr;
+    console.log(`Contract at: ${addr}`);
     res.send('OK');
   } catch (error) {
   	console.log(error);
