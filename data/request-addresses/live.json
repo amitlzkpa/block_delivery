@@ -27,6 +27,22 @@
         {
             "owner_addr": "0x597898a2c256561996583d8efe224b1fa905646b",
             "contract_addr": "0x4537ff281d04209c6dcf1e6aa88c940cad8d78fd"
+        },
+        {
+            "owner_addr": "0x1ef1d33d1e6530deff635ed6f5d648a4ae15943b",
+            "contract_addr": "0x6fbeab008d656dd32f1c0d834d46f48e87deba8e"
+        },
+        {
+            "owner_addr": "0x1ef1d33d1e6530deff635ed6f5d648a4ae15943b",
+            "contract_addr": "0xe57993b9ef3a9c194265fc7d4d1ed23962f6b712"
+        },
+        {
+            "owner_addr": "0x1ef1d33d1e6530deff635ed6f5d648a4ae15943b",
+            "contract_addr": "0x61b2f2304a3b5a2837a562f285a82a2c329d18db"
+        },
+        {
+            "owner_addr": "0x1ef1d33d1e6530deff635ed6f5d648a4ae15943b",
+            "contract_addr": "0x7361c7db688fce3ffb0f21c34594468c1e044b49"
         }
     ]
 }

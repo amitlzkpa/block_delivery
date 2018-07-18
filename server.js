@@ -43,8 +43,6 @@ app.post('/delivery/request', async (req, res) => {
     let jsonFilePath = 'data/request-addresses/live.json';
     let owner_addr = req.query.owner_addr;
     let contract_addr = req.query.contract_addr;
-    console.log(`Contract at: ${contract_addr}`);
-    console.log(`By: ${owner_addr}`);
     fs.readFile(jsonFilePath, 'utf8', async function readFileCallback(err, data){
         if (err){
             console.log(err);
@@ -52,9 +50,10 @@ app.post('/delivery/request', async (req, res) => {
             return;
         } else {
         let requests = JSON.parse(data);
-        let req = {};
-        req["owner_addr"] = owner_addr;
-        req["contract_addr"] = contract_addr;
+        let req = {
+        	'owner_addr': owner_addr,
+        	'contract_addr': contract_addr
+        };
         requests["delivery-requests"].push(req);
         json = JSON.stringify(requests, null, 4);
         await fs.writeFile(jsonFilePath, json, 'utf8', () => { console.log('Added to requests'); });
@@ -62,7 +61,7 @@ app.post('/delivery/request', async (req, res) => {
     res.send('OK');
   } catch (error) {
   	console.log(error);
-  	// res.send('ERR');
+  	res.send('ERR');
   }
 });
 
