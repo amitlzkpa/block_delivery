@@ -138,7 +138,8 @@ $(document).ready(() => {
 					console.log(`Address: ${contract.address}`);
 					let reqTxHash = await deliveryrequestContract.at(contract.address);
 					let reqAmt = web3.toWei(amount, 'ether');
-					reqTxHash.start(reqAmt, 100, 200, message, {from: web3.eth.accounts[0], gas: 3000000, gasPrice: 8000000000, value:reqAmt*2}, async (err, startTxHash) => {
+					let sendAmt = web3.toWei(parseFloat(amount) + 0.047, 'ether');
+					reqTxHash.start(reqAmt, srcCoordInt, dstCoordInt, message, {from: web3.eth.accounts[0], gas: 3000000, gasPrice: 8000000000, value: sendAmt}, async (err, startTxHash) => {
 						if(err) {
 					    	console.log(`Error encountered. Starting the request failed. Details below...`);
 							console.log(err);
