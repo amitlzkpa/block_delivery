@@ -1,5 +1,6 @@
 require('dotenv').config(); // read .env files
 const express = require('express');
+const fs = require('fs');
 const { autocomplete, addrToCoords } = require('./lib/heremaps-mirror');
 
 
@@ -39,8 +40,25 @@ app.get('/api/maps/addrToCoords', async (req, res) => {
 
 app.post('/delivery/request', async (req, res) => {
   try {
-    let addr = req.query.addr;
-    console.log(`Contract at: ${addr}`);
+    let jsonFilePath = 'data/request-addresses/live.json';
+    let owner_addr = req.query.owner_addr;
+    let contract_addr = req.query.contract_addr;
+    console.log(`Contract at: ${contract_addr}`);
+    console.log(`By: ${owner_addr}`);
+    fs.readFile(jsonFilePath, 'utf8', async function readFileCallback(err, data){
+        if (err){
+            console.log(err);
+            res.send('ERR');
+            return;
+        } else {
+        let requests = JSON.parse(data);
+        let req = {};
+        req["owner_addr"] = owner_addr;
+        req["contract_addr"] = contract_addr;
+        requests["delivery-requests"].push(req);
+        json = JSON.stringify(requests, null, 4);
+        await fs.writeFile(jsonFilePath, json, 'utf8', () => { console.log('Added to requests'); });
+    }});
     res.send('OK');
   } catch (error) {
   	console.log(error);

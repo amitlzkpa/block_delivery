@@ -145,7 +145,7 @@ $(document).ready(() => {
 							console.log(err);
 							return;
 						}
-						await $.post(`/delivery/request?addr=${contract.address}`);
+						await $.post(`/delivery/request?owner_addr=${web3.eth.accounts[0]}contract_addr=${contract.address}`);
 					}
 				);
 

@@ -1,0 +1,32 @@
+{
+    "delivery-requests": [
+        {
+            "from": "0x597898a2C256561996583d8eFE224b1fa905646b",
+            "contract_address": "0xa0A78c50D49D3b307C0eC0abf13C17991CE7FF45"
+        },
+        {
+            "from": "0x597898a2C256561996583d8eFE224b1fa905646b",
+            "contract_address": "0x9753978040d7F28edE3f0d9CB94B063F618D599D"
+        },
+        {
+            "from": "0x597898a2C256561996583d8eFE224b1fa905646b",
+            "contract_address": "0x074907a3B8FA8729039637429F97db3b5201449E"
+        },
+        {
+            "from": "0x597898a2C256561996583d8eFE224b1fa905646b",
+            "contract_address": "0xA76F78eA2AB0Ea4C855C45ee9948B2b1D1f81dfc"
+        },
+        {
+            "owner_addr": "0x597898a2c256561996583d8efe224b1fa905646b",
+            "contract_addr": "0x74a39767214494456f3da4ba4bfca0d171c27dba"
+        },
+        {
+            "owner_addr": "0x597898a2c256561996583d8efe224b1fa905646b",
+            "contract_addr": "0x2c6d48ec6de768937ce2cd3166bf652a10a317f6"
+        },
+        {
+            "owner_addr": "0x597898a2c256561996583d8efe224b1fa905646b",
+            "contract_addr": "0x4537ff281d04209c6dcf1e6aa88c940cad8d78fd"
+        }
+    ]
+}
