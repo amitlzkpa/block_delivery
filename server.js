@@ -17,12 +17,22 @@ app.use('/scripts', express.static(`${__dirname}/node_modules/`));
 
 app.get('/api/maps/autocomplete', async (req, res) => {
   try {
-  	// console.log('Received autocomplete req');
     const data = await autocomplete(req.query.query);
     res.setHeader('Content-Type', 'application/json');
     res.send(data);
   } catch (error) {
   	console.log(error);
+  }
+});
+
+
+app.get('/api/maps/addrToCoords', async (req, res) => {
+  try {
+    const data = await addrToCoords(req.query.addr);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(data);
+  } catch (error) {
+    console.log(error);
   }
 });
 

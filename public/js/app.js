@@ -68,6 +68,34 @@ $(document).ready(() => {
 
 
 	    $('#req-button').on('click', async (e) => {
+
+			function pad(n, len=6) {
+				n = n.toString();
+				n.trim();
+				let q = n.length;
+				for(let i=q; i<len; i++) {
+					n = "0"+n;
+				}
+				return n;
+			}
+
+			function parseToFxLengStr(n) {
+				let isNeg = n < 0;
+				let m = n.toFixed(3).toString().replace('.', '').replace('-', '');
+				m = pad(m);
+				if(isNeg) m = "1" + m;
+				else m = "0" + m;
+				return m
+			}
+
+			function encodeCoord(coord) {
+				let la = parseToFxLengStr(coord.Latitude);
+				let lo = parseToFxLengStr(coord.Longitude);
+				let loc = la + lo;
+				let i = parseInt(loc);
+				return i;
+			}
+
 	    	e.preventDefault();
 	    	let srcLoc = $srcInpBox.val();
 	    	let dstLoc = $dstInpBox.val();
@@ -77,6 +105,14 @@ $(document).ready(() => {
 	    	let message = $messageBox.val();
 	    	console.log(`Request from ${srcLoc} to ${dstLoc} for ${amount} ${currency}.`);
 
+	    	let srcResp = await $.get(`/api/maps/addrToCoords?addr=${srcLoc}`);
+	    	let dstResp = await $.get(`/api/maps/addrToCoords?addr=${dstLoc}`);
+
+	    	let srcCoord = srcResp.Response.View[0].Result[0].Location.DisplayPosition;
+	    	let dstCoord = dstResp.Response.View[0].Result[0].Location.DisplayPosition;
+
+	    	let srcCoordInt = encodeCoord(srcCoord);
+	    	let dstCoordInt = encodeCoord(dstCoord);
 
 			var endDateUnixTime = '30000000000';
 			var deliveryrequestContract = web3.eth.contract([{"constant":false,"inputs":[],"name":"bid","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"code","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"deadline","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"assigned_to","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"claim","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"bids","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"assignee","type":"address"}],"name":"assign","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amt","type":"uint256"},{"name":"str","type":"int256"},{"name":"dst","type":"int256"},{"name":"mssg","type":"bytes32"}],"name":"start","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"bid_security","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"completed","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"amount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"id","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"destination","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"start","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"request_security","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"bidders","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"mark_complete","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"message","outputs":[{"name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"deadln","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]);
