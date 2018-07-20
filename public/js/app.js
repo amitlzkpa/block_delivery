@@ -127,6 +127,7 @@ $(document).ready(() => {
 				    if(err) {
 				    	console.log(`Error encountered. Request creation failed. Details below...`);
 						console.log(e);
+						$('#messageback-box').text('Error. Please try again.');
 						return;
 					}
 					if(!contract.address) {
