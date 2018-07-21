@@ -1,52 +1,12 @@
 {
     "delivery-requests": [
         {
-            "from": "0x597898a2C256561996583d8eFE224b1fa905646b",
-            "contract_address": "0xa0A78c50D49D3b307C0eC0abf13C17991CE7FF45"
-        },
-        {
-            "from": "0x597898a2C256561996583d8eFE224b1fa905646b",
-            "contract_address": "0x9753978040d7F28edE3f0d9CB94B063F618D599D"
-        },
-        {
-            "from": "0x597898a2C256561996583d8eFE224b1fa905646b",
-            "contract_address": "0x074907a3B8FA8729039637429F97db3b5201449E"
-        },
-        {
-            "from": "0x597898a2C256561996583d8eFE224b1fa905646b",
-            "contract_address": "0xA76F78eA2AB0Ea4C855C45ee9948B2b1D1f81dfc"
+            "owner": "0x597898a2C256561996583d8eFE224b1fa905646b",
+            "contract_address": "0xD7F6Bb0cc0aecaD1E908dbEE7833D4D505c4b26e"
         },
         {
             "owner_addr": "0x597898a2c256561996583d8efe224b1fa905646b",
-            "contract_addr": "0x74a39767214494456f3da4ba4bfca0d171c27dba"
-        },
-        {
-            "owner_addr": "0x597898a2c256561996583d8efe224b1fa905646b",
-            "contract_addr": "0x2c6d48ec6de768937ce2cd3166bf652a10a317f6"
-        },
-        {
-            "owner_addr": "0x597898a2c256561996583d8efe224b1fa905646b",
-            "contract_addr": "0x4537ff281d04209c6dcf1e6aa88c940cad8d78fd"
-        },
-        {
-            "owner_addr": "0x1ef1d33d1e6530deff635ed6f5d648a4ae15943b",
-            "contract_addr": "0x6fbeab008d656dd32f1c0d834d46f48e87deba8e"
-        },
-        {
-            "owner_addr": "0x1ef1d33d1e6530deff635ed6f5d648a4ae15943b",
-            "contract_addr": "0xe57993b9ef3a9c194265fc7d4d1ed23962f6b712"
-        },
-        {
-            "owner_addr": "0x1ef1d33d1e6530deff635ed6f5d648a4ae15943b",
-            "contract_addr": "0x61b2f2304a3b5a2837a562f285a82a2c329d18db"
-        },
-        {
-            "owner_addr": "0x1ef1d33d1e6530deff635ed6f5d648a4ae15943b",
-            "contract_addr": "0x7361c7db688fce3ffb0f21c34594468c1e044b49"
-        },
-        {
-            "owner_addr": "0x597898a2c256561996583d8efe224b1fa905646b",
-            "contract_addr": "0xa52802790368334590d2b7fbd0a825a3896e04ac"
+            "contract_addr": "0xae24b6cbe0ed7dafed99721f184b2c416316a99c"
         }
     ]
 }
