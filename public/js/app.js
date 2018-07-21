@@ -202,6 +202,31 @@ $(document).ready(() => {
 	    $biddersBox.text('7');
 	    $requestSecurityBox.text('20');
 	    $bidSecurityBox.text('30');
+
+
+
+	    $('#reqdeldet-bid-button').on('click', async (e) => {
+	    	e.preventDefault();
+	    	console.log(`Bidding for ${addr}`);
+	    })
+
+	    $('#reqdeldet-assign-button').on('click', async (e) => {
+	    	e.preventDefault();
+	    	let assignee = $('#reqdeldet-assignto-address').val();
+	    	console.log(`Assigning ${addr} to ${assignee}`);
+	    })
+
+	    $('#reqdeldet-mark-complete-button').on('click', async (e) => {
+	    	e.preventDefault();
+	    	console.log(`Marking ${addr} complete`);
+	    })
+
+	    $('#reqdeldet-claim-button').on('click', async (e) => {
+	    	e.preventDefault();
+	    	console.log(`Claiming from ${addr}`);
+	    })
+
+
 	}
 
 
