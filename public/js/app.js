@@ -1,4 +1,15 @@
 $(document).ready(() => {
+
+	const promisify = (inner) =>
+	new Promise((resolve, reject) =>
+		inner((err, res) => {
+			if (err) { reject(err) }
+
+				resolve(res);
+		})
+	);
+
+
 	
 	const el = $('#app');
 	const homeTemplate = Handlebars.compile($('#home-template').html());
@@ -163,11 +174,29 @@ $(document).ready(() => {
 	}
 
 
-	reqDeliveryDetailsTemplate.init = () => {
+	reqDeliveryDetailsTemplate.init = async () => {
 
 		let addr = '0xa52802790368334590d2b7fbd0a825a3896e04ac';
 		console.log(`Address: ${addr}`);
 
+
+		let DeliverContract = web3.eth.contract(abiDefinition);
+		var contract = DeliverContract.at(addr);
+		console.log(contract);
+
+
+        // contract.owner((error, result) => {
+        //     if(!error)
+        //         {
+        //             $("#instructor").html(result[0]+' ('+result[1]+' years old)');
+        //             console.log(result);
+        //         }
+        //     else
+        //         console.error(error);
+        // });
+
+		let owner = await promisify(cb => contract.owner());
+		console.log(owner);
 
 
 
@@ -189,7 +218,7 @@ $(document).ready(() => {
 
 
 	    $addrBox.text(addr);
-	    $ownerBox.text(addr);
+	    $ownerBox.text(owner);
 	    $statusBox.text('live');
 	    $srcInpBox.text('London');
 	    $dstInpBox.text('New York');
