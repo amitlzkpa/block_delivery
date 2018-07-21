@@ -15,6 +15,14 @@
 
     <!-- block -->
 
+    <script id="home-template" type="text/x-handlebars-template">
+      <div">
+        <a href="/">Home</a>
+        <a href="/request/">Request</a>
+        <a href="/request-details/">Details</a>
+      </div>
+    </script>
+
     <script id="error-template" type="text/x-handlebars-template">
       <div style="height:250px;">
         <h2 class="center-align">{{title}}</h2>
@@ -29,23 +37,23 @@
           <div class="col-lg-12">
             
             <p>Start Address</p>
-            <input placeholder="enter start address here..." id="src-address" type="text" class="autocomplete">
+            <input placeholder="enter start address here..." id="reqdel-src-address" type="text" class="autocomplete">
 
             <p>Destination Address</p>
-            <input placeholder="enter destrination address here..." id="dst-address" type="text" class="autocomplete">
+            <input placeholder="enter destrination address here..." id="reqdel-dst-address" type="text" class="autocomplete">
 
             <p>Amount</p>
-            <input placeholder="how much you are willing to pay for this delivery" id="amount" type="text">
+            <input placeholder="how much you are willing to pay for this delivery" id="reqdel-amount" type="text">
 
             <p>Currency</p>
-            <input placeholder="what currency" id="currency" type="text" value='ETH'>
+            <input placeholder="what currency" id="reqdel-currency" type="text" value='ETH'>
 
             </br></br>
 
             <p>Ride Size</p>
             <p class="grey-text small-text">What size of transportation do you think you delivery would need?</p>
             <div class="input-field col s12">
-              <select id="ride-size">
+              <select id="reqdel-ride-size">
                 <option value="1">Bike</option>
                 <option value="2">Car</option>
                 <option value="2">SUV</option>
@@ -54,12 +62,64 @@
             </div>
 
             <p>Message Size</p>
-            <input placeholder="enter message..." id="message" type="text">
+            <input placeholder="enter message..." id="reqdel-message" type="text">
 
             </br></br>
-            <button id="req-button" class="waves-effect waves-light right btn">Request</button>
+            <button id="reqdel-req-button" class="waves-effect waves-light right btn">Request</button>
 
-            <p id="messageback-box" class="grey-text"></p>
+            <p id="reqdel-messageback-box" class="grey-text"></p>
+
+          </div>
+        </div>
+    </script>
+
+    <!-- block -->
+
+    <script id="reqest-delivery-details-template" type="text/x-handlebars-template">
+        <div class="row">
+          <div class="col-lg-12">
+            
+            <p>Owner: <span id="reqdeldet-owner-address" class="grey-text"></span></p>
+            <p>Status: <span id="reqdeldet-status" class="grey-text"></span></p>
+            
+            
+            <p>Start Address</p>
+            <h4 id="reqdeldet-src-address"></h4>
+
+            <p>Destination Address</p>
+            <h4 id="reqdeldet-dst-address"></h4>
+
+            <p>Amount</p>
+            <h4 id="reqdeldet-amount"></h4>
+
+            <p>Currency</p>
+            <h4 id="reqdeldet-currency">ETH</h4>
+
+            <p>Ride Size</p>
+            <h4 id="reqdeldet-ride-size"></h4>
+
+            <p>Message</p>
+            <h4 id="reqdeldet-message"></h4>
+
+            <p>Deadline</p>
+            <h4 id="reqdeldet-deadln"></h4>
+
+            <p>Assigned To</p>
+            <h4 id="reqdeldet-assignedto"></h4>
+
+            <p>Bidders</p>
+            <h4 id="reqdeldet-bidders"></h4>
+
+            <p>Request Security</p>
+            <h4 id="reqdeldet-request-security"></h4>
+
+            <p>Bid Security</p>
+            <h4 id="reqdeldet-bid-security"></h4>
+
+            </br></br>
+            <button id="reqdeldet-assign-button" class="waves-effect waves-light right btn">Assign</button>
+
+            <p id="reqdeldet-messageback-box" class="grey-text"></p>
 
           </div>
         </div>

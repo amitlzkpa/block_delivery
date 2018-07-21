@@ -1,8 +1,10 @@
 $(document).ready(() => {
 	
 	const el = $('#app');
+	const homeTemplate = Handlebars.compile($('#home-template').html());
 	const errorTemplate = Handlebars.compile($('#error-template').html());
 	const reqDeliveryTemplate = Handlebars.compile($('#reqest-delivery-template').html());
+	const reqDeliveryDetailsTemplate = Handlebars.compile($('#reqest-delivery-details-template').html());
 
 	const abiDefinitionStr = '[{"constant":false,"inputs":[],"name":"bid","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"code","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"deadline","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"assigned_to","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"claim","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"bids","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"assignee","type":"address"}],"name":"assign","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amt","type":"uint256"},{"name":"str","type":"int256"},{"name":"dst","type":"int256"},{"name":"mssg","type":"bytes32"}],"name":"start","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"bid_security","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"completed","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"amount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"id","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"destination","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"start","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"request_security","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"bidders","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"mark_complete","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"message","outputs":[{"name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"deadln","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]';
 	const abiDefinition = JSON.parse(abiDefinitionStr);
@@ -12,10 +14,10 @@ $(document).ready(() => {
 	reqDeliveryTemplate.init = () => {
 
 
-	    let $dstInpBox = $('#dst-address');
-		let $srcInpBox = $('#src-address');
-	    let $messageBox = $('#message');
-	    let $currBox = $('#currency');
+	    let $dstInpBox = $('#reqdel-dst-address');
+		let $srcInpBox = $('#reqdel-src-address');
+	    let $messageBox = $('#reqdel-message');
+	    let $currBox = $('#reqdel-currency');
 		
 
 
@@ -34,7 +36,7 @@ $(document).ready(() => {
 	    			a[b.label] = null;
 	    			return a;
 	    		}, {});
-	    		$('#src-address').autocomplete({
+	    		$('#reqdel-src-address').autocomplete({
 	    			data: ss,
 					onAutocomplete: function(val) {
 						console.log(val);
@@ -56,7 +58,7 @@ $(document).ready(() => {
 	    			a[b.label] = null;
 	    			return a;
 	    		}, {});
-	    		$('#dst-address').autocomplete({
+	    		$('#reqdel-dst-address').autocomplete({
 	    			data: ss,
 					onAutocomplete: function(val) {
 						console.log(val);
@@ -67,8 +69,9 @@ $(document).ready(() => {
 	    })
 
 
-	    $('#req-button').on('click', async (e) => {
+	    $('#reqdel-req-button').on('click', async (e) => {
 
+	    	// convert coordinates to ints for the contract
 			function pad(n, len=6) {
 				n = n.toString();
 				n.trim();
@@ -99,8 +102,8 @@ $(document).ready(() => {
 	    	e.preventDefault();
 	    	let srcLoc = $srcInpBox.val();
 	    	let dstLoc = $dstInpBox.val();
-	    	let amount = $('#amount').val();
-	    	let rideSize = $('#ride-size').val();
+	    	let amount = $('#reqdel-amount').val();
+	    	let rideSize = $('#reqdel-ride-size').val();
 	    	let currency = $currBox.val();
 	    	let message = $messageBox.val();
 	    	console.log(`Request from ${srcLoc} to ${dstLoc} for ${amount} ${currency}.`);
@@ -127,7 +130,7 @@ $(document).ready(() => {
 				    if(err) {
 				    	console.log(`Error encountered. Request creation failed. Details below...`);
 						console.log(e);
-						$('#messageback-box').text('Error. Please try again.');
+						$('#reqdel-messageback-box').text('Error. Please try again.');
 						return;
 					}
 					if(!contract.address) {
@@ -147,6 +150,7 @@ $(document).ready(() => {
 							return;
 						}
 						await $.post(`/delivery/request?owner_addr=${web3.eth.accounts[0]}&contract_addr=${contract.address}`);
+						router.navigateTo(`/request-details/${contract.address}`);
 					}
 				);
 
@@ -156,6 +160,48 @@ $(document).ready(() => {
 
 	    });
 
+	}
+
+
+	reqDeliveryDetailsTemplate.init = () => {
+
+		let addr = '0xa52802790368334590d2b7fbd0a825a3896e04ac';
+		console.log(`Address: ${addr}`);
+
+
+
+
+	    let $addrBox = $('#reqdeldet-addr-address');
+	    let $ownerBox = $('#reqdeldet-owner-address');
+	    let $statusBox = $('#reqdeldet-status');
+		let $srcInpBox = $('#reqdeldet-src-address');
+	    let $dstInpBox = $('#reqdeldet-dst-address');
+		let $amountBox = $('#reqdeldet-amount');
+	    let $currBox = $('#reqdeldet-currency');
+	    let $rideSizeBox = $('#reqdeldet-ride-size');
+	    let $messageBox = $('#reqdeldet-message');
+	    let $deadlnBox = $('#reqdeldet-deadln');
+	    let $assignedtoBox = $('#reqdeldet-assignedto');
+	    let $biddersBox = $('#reqdeldet-bidders');
+	    let $requestSecurityBox = $('#reqdeldet-request-security');
+	    let $bidSecurityBox = $('#reqdeldet-bid-security');
+
+
+
+	    $addrBox.text(addr);
+	    $ownerBox.text(addr);
+	    $statusBox.text('live');
+	    $srcInpBox.text('London');
+	    $dstInpBox.text('New York');
+	    $amountBox.text('30');
+	    $currBox.text('GWEI');
+	    $rideSizeBox.text('CAR');
+	    $messageBox.text('9892000000');
+	    $deadlnBox.text('23rd December, 2018');
+	    $assignedtoBox.text('0x597898a2c256561996583d8efe224b1fa905646b');
+	    $biddersBox.text('7');
+	    $requestSecurityBox.text('20');
+	    $bidSecurityBox.text('30');
 	}
 
 
@@ -173,10 +219,26 @@ $(document).ready(() => {
 		},
 	});
 
-	router.add('/', () => {
+	router.add('/request', () => {
 		let html = reqDeliveryTemplate();
 		el.html(html);
 		reqDeliveryTemplate.init();
+	});
+
+	router.add('/request-details/{addr}', (addr) => {
+		el.html('Coming soon');
+		// console.log(addr);
+		// el.html("Details for");
+		// let html = reqDeliveryDetailsTemplate();
+		// el.html(html);
+	});
+
+	router.add('/', () => {
+		// let html = homeTemplate();
+		// el.html(html);
+		let html = reqDeliveryDetailsTemplate();
+		el.html(html);
+		reqDeliveryDetailsTemplate.init();
 	});
 
 
@@ -206,10 +268,10 @@ $(document).ready(() => {
 
 
 
-	// let html = reqDeliveryTemplate();
-	// el.html(html);
-	router.navigateTo('');
-	// el.html("Hi there!");
 
+
+	// router.addUriListener();
+	router.navigateTo(window.location.pathname);
+	// router.navigateTo('/request-details');
 
 });
