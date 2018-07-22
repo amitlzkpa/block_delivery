@@ -2,11 +2,7 @@
     "delivery-requests": [
         {
             "owner": "0x597898a2C256561996583d8eFE224b1fa905646b",
-            "contract_address": "0xD7F6Bb0cc0aecaD1E908dbEE7833D4D505c4b26e"
-        },
-        {
-            "owner_addr": "0x597898a2c256561996583d8efe224b1fa905646b",
-            "contract_addr": "0xae24b6cbe0ed7dafed99721f184b2c416316a99c"
+            "contract_address": "0x3ea2bfdf188bedd5f65b1d99eb504f46d387d2f9"
         }
     ]
 }
