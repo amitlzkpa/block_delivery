@@ -392,22 +392,98 @@ $(document).ready(() => {
 	    $('#reqdeldet-bid-button').on('click', async (e) => {
 	    	e.preventDefault();
 	    	console.log(`Bidding for ${addr}`);
+			contract.bid(
+				{
+					from: web3.eth.accounts[0],
+					gas: '3000000',
+					gasPrice: '8000000000',
+					value: '7000000000000000'
+				},
+				async (err, res) => {
+					if (err) {
+						console.log(err);
+					$('#reqdeldet-messageback-box').text(`<span class="red-text">Bid failed</span>`);
+					setTimeout(() => { $('#reqdeldet-messageback-box').text(''); }, 12000);
+						return;
+					}
+					console.log(`Bid successful: ${res.toString()}`);
+					$('#reqdeldet-messageback-box').text(`<span class="grey-text">Bid successful</span>`);
+					setTimeout(() => { $('#reqdeldet-messageback-box').text(''); }, 12000);
+				});
 	    })
+
+
 
 	    $('#reqdeldet-assign-button').on('click', async (e) => {
 	    	e.preventDefault();
 	    	let assignee = $('#reqdeldet-assignto-address').val();
 	    	console.log(`Assigning ${addr} to ${assignee}`);
+			contract.assign(
+				assignee,
+				{
+					from: web3.eth.accounts[0],
+					gas: '3000000',
+					gasPrice: '8000000000'
+				},
+				async (err, res) => {
+					if (err) {
+						console.log(err);
+						$('#reqdeldet-messageback-box').text(`<span class="grey-text">Assign failed</span>`);
+						setTimeout(() => { $('#reqdeldet-messageback-box').text(''); }, 12000);
+						return;
+					}
+					console.log(`Assign successful: ${res.toString()}`);
+					$('#reqdeldet-messageback-box').text(`<span class="grey-text">Assign successful</span>`);
+					setTimeout(() => { $('#reqdeldet-messageback-box').text(''); }, 12000);
+				});
 	    })
+
+
 
 	    $('#reqdeldet-mark-complete-button').on('click', async (e) => {
 	    	e.preventDefault();
 	    	console.log(`Marking ${addr} complete`);
+			contract.mark_complete(
+				{
+					from: web3.eth.accounts[0],
+					gas: '3000000',
+					gasPrice: '8000000000'
+				},
+				async (err, res) => {
+					if (err) {
+						console.log(err);
+						$('#reqdeldet-messageback-box').text(`<span class="grey-text">Mark complete failed</span>`);
+						setTimeout(() => { $('#reqdeldet-messageback-box').text(''); }, 12000);
+						return;
+					}
+					console.log(`Mark complete successful: ${res.toString()}`);
+					$('#reqdeldet-messageback-box').text(`<span class="grey-text">Mark complete successful</span>`);
+					setTimeout(() => { $('#reqdeldet-messageback-box').text(''); }, 12000);
+				});
 	    })
+
+
 
 	    $('#reqdeldet-claim-button').on('click', async (e) => {
 	    	e.preventDefault();
 	    	console.log(`Claiming from ${addr}`);
+			contract.claim(
+				{
+					from: web3.eth.accounts[0],
+					gas: '3000000',
+					gasPrice: '8000000000'
+				},
+				async (err, res) => {
+					if (err) {
+						console.log(err);
+						$('#reqdeldet-messageback-box').text(`<span class="grey-text">Claim failed</span>`);
+						setTimeout(() => { $('#reqdeldet-messageback-box').text(''); }, 12000);
+						return;
+					}
+					console.log(`Claim successful: ${res.toString()}`);
+					$('#reqdeldet-messageback-box').text(`<span class="grey-text">Claim successful</span>`);
+					setTimeout(() => { $('#reqdeldet-messageback-box').text(''); }, 12000);
+				});
 	    })
 
 
