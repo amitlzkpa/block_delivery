@@ -2,6 +2,7 @@ require('dotenv').config(); // read .env files
 const express = require('express');
 const fs = require('fs');
 const { autocomplete, addrToCoords } = require('./lib/heremaps-mirror');
+const { requests_list } = require('./lib/o-lap-data');
 
 
 const app = express();
@@ -14,6 +15,18 @@ app.use(express.static('public'));
 
 // Allow front-end access to node_modules folder
 app.use('/scripts', express.static(`${__dirname}/node_modules/`));
+
+
+app.get('/api/requests-list/', async (req, res) => {
+  try {
+    // let filterParams = req.filterParams;
+    const data = await requests_list(req);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(data);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 
 app.get('/api/maps/autocomplete', async (req, res) => {
