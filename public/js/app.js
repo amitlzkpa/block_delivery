@@ -34,7 +34,22 @@ $(document).ready(() => {
 
 	// todo ------------------------------------------------------------------------------------------
 	function decodeCoord(str) {
-		return 0;
+		let paddedStr = pad(str, 7);
+		let laEnc = paddedStr.slice(0, 7);
+		let loEnc = paddedStr.slice(7, paddedStr.length);
+		let laIsNeg = (laEnc.charAt(0) == '1');
+		let loIsNeg = (loEnc.charAt(0) == '1');
+
+		laEnc = laEnc.slice(1, laEnc.length);
+		loEnc = loEnc.slice(1, laEnc.length);
+
+		laEnc = [laEnc.slice(0, 3), '.', laEnc.slice(laEnc.length)].join('');
+		loEnc = [loEnc.slice(0, 3), '.', loEnc.slice(loEnc.length)].join('');
+
+		let la = parseFloat(laEnc) * ((laIsNeg) ? -1 : 1);
+		let lo = parseFloat(loEnc) * ((loIsNeg) ? -1 : 1);
+
+		return { "latitude": la, "longitude": lo };
 	}
 
 	// ref: https://gist.github.com/joni/3760795
