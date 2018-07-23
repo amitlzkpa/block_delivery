@@ -497,16 +497,19 @@ $(document).ready(() => {
 		$('#update-list-btn').on('click', async (e) => {
 			e.preventDefault();
 			console.log('Refreshing');
-			let filterParams = {};
-			$listContainer = $('.list-container');
 			let reqList = await $.get(`/api/requests-list/`);
-			console.log(reqList);
-			$listContainer.empty();
-			let reqData = reqList["delivery-requests"][0];
-			let data = reqData;
-			let reqDeliveryDetailsShortTemplate = Handlebars.compile($('#reqest-delivery-details-short-template').html());
-			let html = reqDeliveryDetailsShortTemplate(data);
+			let html = liveRequestsTemplate();
 			el.html(html);
+			let $listContainer = $('#list-container');
+			$listContainer.empty();
+			for(let i = 0; i<reqList["delivery-requests"].length; i++) {
+				let data = reqList["delivery-requests"][i];
+				console.log(data);
+				let reqDeliveryDetailsShortTemplate = Handlebars.compile($('#reqest-delivery-details-short-template').html());
+				let html2 = reqDeliveryDetailsShortTemplate(data);
+				$listContainer.append(html2);
+				$listContainer.append(`</hr>`);
+			}
 
 		});
 
