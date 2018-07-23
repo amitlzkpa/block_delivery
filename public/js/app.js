@@ -199,9 +199,9 @@ $(document).ready(() => {
 	    	let srcCoordInt = encodeCoord(srcCoord);
 	    	let dstCoordInt = encodeCoord(dstCoord);
 
-			var endDateUnixTime = '30000000000';
-			var deliveryrequestContract = web3.eth.contract(abiDefinition);
-			var deliveryrequest = await deliveryrequestContract.new(
+			let endDateUnixTime = '30000000000';
+			let deliveryrequestContract = web3.eth.contract(abiDefinition);
+			let deliveryrequest = await deliveryrequestContract.new(
 				endDateUnixTime,
 				{
 					from: web3.eth.accounts[0], 
@@ -222,10 +222,10 @@ $(document).ready(() => {
 					}
 					console.log(`Contract mined!`);
 					console.log(`Address: ${contract.address}`);
-					let reqTxHash = await deliveryrequestContract.at(contract.address);
+					let deployedContract = await deliveryrequestContract.at(contract.address);
 					let reqAmt = web3.toWei(amount, 'ether');
 					let sendAmt = web3.toWei(parseFloat(amount) + 0.047, 'ether');
-					reqTxHash.init(reqAmt, srcCoordInt, dstCoordInt, message, {from: web3.eth.accounts[0], gas: 3000000, gasPrice: 8000000000, value: sendAmt}, async (err, startTxHash) => {
+					deployedContract.init(reqAmt, srcCoordInt, dstCoordInt, message, {from: web3.eth.accounts[0], gas: 3000000, gasPrice: 8000000000, value: sendAmt}, async (err, startTxHash) => {
 						if(err) {
 					    	console.log(`Error encountered. Starting the request failed. Details below...`);
 							console.log(err);
@@ -252,7 +252,7 @@ $(document).ready(() => {
 
 
 		let DeliverContract = web3.eth.contract(abiDefinition);
-		var contract = DeliverContract.at(addr);
+		let contract = DeliverContract.at(addr);
 		console.log(contract);
 
 
@@ -309,9 +309,6 @@ $(document).ready(() => {
 			d.setUTCSeconds(res);
 			let deadln = d;
 			$('#reqdeldet-deadln').html(`${deadln.toLocaleDateString()} | ${deadln.toLocaleTimeString()}`);
-			if(parseInt(deadln) == 1) {
-				return;
-			}
 		});
 
 		
@@ -496,7 +493,6 @@ $(document).ready(() => {
 
 		$('#update-list-btn').on('click', async (e) => {
 			e.preventDefault();
-			console.log('Refreshing');
 			let reqList = await $.get(`/api/requests-list/`);
 			let html = liveRequestsTemplate();
 			el.html(html);
@@ -504,11 +500,73 @@ $(document).ready(() => {
 			$listContainer.empty();
 			for(let i = 0; i<reqList["delivery-requests"].length; i++) {
 				let data = reqList["delivery-requests"][i];
-				console.log(data);
+				let addr = data["contract_address"];
+				let DeliverContract = web3.eth.contract(abiDefinition);
+				let contract = DeliverContract.at(addr);
+
 				let reqDeliveryDetailsShortTemplate = Handlebars.compile($('#reqest-delivery-details-short-template').html());
 				let html2 = reqDeliveryDetailsShortTemplate(data);
 				$listContainer.append(html2);
-				$listContainer.append(`</hr>`);
+				$listContainer.append(`<hr>`);
+
+				contract.deadline.call(async (err, res) => {
+					if (err) {
+						console.log(err);
+						$(`#reqdeldetshort-deadln-${addr}`).text(NA);
+						return;
+					}
+					let d = new Date(0);
+					d.setUTCSeconds(res);
+					let deadln = d;
+					$(`#reqdeldetshort-deadln-${addr}`).html(`${deadln.toLocaleDateString()}`);
+				});
+
+
+			    $(`#reqdeldetshort-ride-size-${addr}`).text('CAR');
+
+
+				contract.source.call(async (err, res) => {
+					if (err) {
+						console.log(err);
+						$(`#reqdeldetshort-src-address-${addr}`).text(NA);
+						return;
+					}
+					let encodedLoc = res.toString();
+					let g = decodeCoord(encodedLoc);
+					$(`#reqdeldetshort-src-address-${addr}`).text(`London`);
+				});
+
+				
+					
+				contract.destination.call(async (err, res) => {
+					if (err) {
+						console.log(err);
+						$(`#reqdeldetshort-dst-address-${addr}`).text(NA);
+						return;
+					}
+					let encodedLoc = res.toString();
+					let g = decodeCoord(encodedLoc);
+					console.log(g);
+					$(`#reqdeldetshort-dst-address-${addr}`).text('New York');
+				});
+
+				
+					
+				contract.amount.call(async (err, res) => {
+					let curr = 'USD';
+					$(`#reqdeldetshort-currency-${addr}`).text(curr);
+					if (err) {
+						console.log(err);
+						$(`#reqdeldetshort-amount-${addr}`).text(NA);
+						return;
+					}
+					let amt = res.toString();
+					let usdAmt = 450 * parseFloat(web3.fromWei(amt, 'ETHER').toString());
+					$(`#reqdeldetshort-amount-${addr}`).text(`${usdAmt}`);
+				});
+
+
+
 			}
 
 		});
