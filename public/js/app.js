@@ -114,7 +114,6 @@ $(document).ready(() => {
 	const errorTemplate = Handlebars.compile($('#error-template').html());
 	const reqDeliveryTemplate = Handlebars.compile($('#reqest-delivery-template').html());
 	const reqDeliveryDetailsTemplate = Handlebars.compile($('#reqest-delivery-details-template').html());
-	const reqDeliveryDetailsShortTemplate = Handlebars.compile($('#reqest-delivery-details-short-template').html());
 	const liveRequestsTemplate = Handlebars.compile($('#reqests-live-template').html());
 
 	const abiDefinitionStr = '[{"constant":false,"inputs":[],"name":"bid","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"code","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"amt","type":"uint256"},{"name":"src","type":"int256"},{"name":"dst","type":"int256"},{"name":"mssg","type":"bytes32"}],"name":"init","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"getBidCount","outputs":[{"name":"count","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"deadline","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"assigned_to","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"claim","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"bids","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"source","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"assignee","type":"address"}],"name":"assign","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"bid_security","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"completed","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"amount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"id","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"destination","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"request_security","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"bidders","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"mark_complete","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"message","outputs":[{"name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"deadln","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"deadline","type":"uint256"},{"indexed":false,"name":"src","type":"int256"},{"indexed":false,"name":"destination","type":"int256"},{"indexed":false,"name":"amount","type":"uint256"},{"indexed":false,"name":"message","type":"bytes32"}],"name":"Init","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"bidder","type":"address"}],"name":"Bid","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"assignee","type":"address"}],"name":"AssignedTo","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"amount","type":"uint256"}],"name":"MarkedComplete","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"claimant","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"Claimed","type":"event"}]';
@@ -493,13 +492,6 @@ $(document).ready(() => {
 	
 
 
-	reqDeliveryDetailsShortTemplate.populate = async () => {
-		$('#reqdeldetshort-addr-address').text('data.address');
-		// $('#').;
-		// $('#').;
-	}
-
-
 	liveRequestsTemplate.init = async () => {
 
 		$('#update-list-btn').on('click', async (e) => {
@@ -508,15 +500,13 @@ $(document).ready(() => {
 			let filterParams = {};
 			$listContainer = $('.list-container');
 			let reqList = await $.get(`/api/requests-list/`);
+			console.log(reqList);
 			$listContainer.empty();
-			for(reqData in reqList["delivery-requests"]) {
-				let addr = reqData["contract_addr"]
-				let html = reqDeliveryDetailsShortTemplate();
-				let data = { "address": addr };
-				// $listContainer.append(reqTemlpate.html());
-				el.html(html);
-				reqDeliveryDetailsShortTemplate.populate(data);
-			}
+			let reqData = reqList["delivery-requests"][0];
+			let data = reqData;
+			let reqDeliveryDetailsShortTemplate = Handlebars.compile($('#reqest-delivery-details-short-template').html());
+			let html = reqDeliveryDetailsShortTemplate(data);
+			el.html(html);
 
 		});
 
