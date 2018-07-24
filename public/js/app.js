@@ -339,11 +339,13 @@ $(document).ready(() => {
 			}
 			let encodedLoc = res.toString();
 			let coords = decodeCoord(encodedLoc);
-			let coordStr = `${coords.longitude},${coords.latitude}`
-			console.log(coords);
+			let coordStr = `${coords.latitude},${coords.longitude}`;
+			console.log(coordStr);
 	    	let addr = await $.get(`/api/maps/coordsToAddr?coords=${coordStr}`);
+	    	// ----------------------------------CONTINUE HERE
+	    	// console.log(addr.Response);
 			// console.log(addr);
-			$('#reqdeldet-src-address').text(`London`);
+			// $('#reqdeldet-src-address').text('London');
 		});
 
 		

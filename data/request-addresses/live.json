@@ -7,6 +7,10 @@
         {
             "owner": "0x508a6c0f1c3fcc940d89b74a940518c06ac2c6bf",
             "contract_address": "0x877c979b9a4a2536d6ff4ced0c23cd5e12bc8138"
+        },
+        {
+            "owner_addr": "0x508a6c0f1c3fcc940d89b74a940518c06ac2c6bf",
+            "contract_addr": "0x535e8eef020a1cb3c911b167de2b43ac1dab97a2"
         }
     ]
 }
