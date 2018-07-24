@@ -1,7 +1,7 @@
 require('dotenv').config(); // read .env files
 const express = require('express');
 const fs = require('fs');
-const { autocomplete, addrToCoords } = require('./lib/heremaps-mirror');
+const { autocomplete, addrToCoords, coordsToAddr } = require('./lib/heremaps-mirror');
 const { requests_list } = require('./lib/o-lap-data');
 
 
@@ -43,6 +43,17 @@ app.get('/api/maps/autocomplete', async (req, res) => {
 app.get('/api/maps/addrToCoords', async (req, res) => {
   try {
     const data = await addrToCoords(req.query.addr);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(data);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+app.get('/api/maps/coordsToAddr', async (req, res) => {
+  try {
+    const data = await coordsToAddr(req.query.coords);
     res.setHeader('Content-Type', 'application/json');
     res.send(data);
   } catch (error) {

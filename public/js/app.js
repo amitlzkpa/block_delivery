@@ -34,17 +34,20 @@ $(document).ready(() => {
 
 	// todo ------------------------------------------------------------------------------------------
 	function decodeCoord(str) {
-		let paddedStr = pad(str, 7);
+		let paddedStr = pad(str, 14);
 		let laEnc = paddedStr.slice(0, 7);
 		let loEnc = paddedStr.slice(7, paddedStr.length);
 		let laIsNeg = (laEnc.charAt(0) == '1');
 		let loIsNeg = (loEnc.charAt(0) == '1');
 
+		// console.log(paddedStr);
 		laEnc = laEnc.slice(1, laEnc.length);
-		loEnc = loEnc.slice(1, laEnc.length);
+		loEnc = loEnc.slice(1, loEnc.length);
 
-		laEnc = [laEnc.slice(0, 3), '.', laEnc.slice(laEnc.length)].join('');
-		loEnc = [loEnc.slice(0, 3), '.', loEnc.slice(loEnc.length)].join('');
+		laEnc = [laEnc.slice(0, 3), '.', laEnc.slice(3)].join('');
+		loEnc = [loEnc.slice(0, 3), '.', loEnc.slice(3)].join('');
+		// console.log(`la is ${laEnc} and is${(laIsNeg ? '' :' not')} negative`);
+		// console.log(`lo is ${loEnc} and is${(loIsNeg ? '' :' not')} negative`);
 
 		let la = parseFloat(laEnc) * ((laIsNeg) ? -1 : 1);
 		let lo = parseFloat(loEnc) * ((loIsNeg) ? -1 : 1);
@@ -335,8 +338,11 @@ $(document).ready(() => {
 				return;
 			}
 			let encodedLoc = res.toString();
-			let g = decodeCoord(encodedLoc);
-			console.log(g);
+			let coords = decodeCoord(encodedLoc);
+			let coordStr = `${coords.longitude},${coords.latitude}`
+			console.log(coords);
+	    	let addr = await $.get(`/api/maps/coordsToAddr?coords=${coordStr}`);
+			// console.log(addr);
 			$('#reqdeldet-src-address').text(`London`);
 		});
 
@@ -350,7 +356,7 @@ $(document).ready(() => {
 			}
 			let encodedLoc = res.toString();
 			let g = decodeCoord(encodedLoc);
-			console.log(g);
+			// console.log(g);
 			$('#reqdeldet-dst-address').text(`New York`);
 		});
 
