@@ -16,12 +16,23 @@
     <!-- block -->
 
     <script id="home-template" type="text/x-handlebars-template">
-      <div">
-        <a href="/">Home</a>
-        <a href="/request">Request</a>
-        <a href="/request-details">Details</a>
+      <div class="row">
+        <div class="col-lg-12">
+          <a href="/" class="btn" style="width: 100%; margin: 4px;">Home</a>
+        </div>
+        <div class="col-lg-12">
+          <a href="/request" class="btn" style="width: 100%; margin: 4px;">Request</a>
+        </div>
+        <div class="col-lg-12">
+          <a href="/request-details" class="btn" style="width: 100%; margin: 4px;">Details</a>
+        </div>
+        <div class="col-lg-12">
+          <a href="/requests-live" class="btn" style="width: 100%; margin: 4px;">Live Requests</a>
+        </div>
       </div>
     </script>
+
+    <!-- block -->
 
     <script id="error-template" type="text/x-handlebars-template">
       <div style="height:250px;">
@@ -139,7 +150,6 @@
 
     <!-- block -->
 
-
     <script id="reqest-delivery-details-short-template" type="text/x-handlebars-template">
 
         <div class="row">
@@ -170,6 +180,8 @@
         </div>
     </script>
 
+    <!-- block -->
+
     <script id="reqests-live-template" type="text/x-handlebars-template">
 
       <div class="row">
@@ -191,18 +203,13 @@
       </div>
     </script>
 
+    <!-- block -->
 
-  <!-- container end -->
-  <div id="app"></div>
+    <div id="app"></div>
+
   </div>
+  <!-- container end -->
 
-  <!-- block -->
-
-
-  <!-- block -->
-
-
-  <!-- block -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>

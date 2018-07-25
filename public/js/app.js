@@ -553,9 +553,18 @@ $(document).ready(() => {
 						$(`#reqdeldetshort-src-address-${addr}`).text(NA);
 						return;
 					}
-					let encodedLoc = res.toString();
-					let g = decodeCoord(encodedLoc);
-					$(`#reqdeldetshort-src-address-${addr}`).text(`London`);
+					try {
+						let encodedLoc = res.toString();
+						let coords = decodeCoord(encodedLoc);
+						let coordStr = `${coords.latitude},${coords.longitude}`;
+				    	let resp = await $.get(`/api/maps/coordsToAddr?coords=${coordStr}`);
+				    	let addr = resp["Response"]["View"][0]["Result"][0]["Location"]["Address"]["Label"];
+						$(`#reqdeldetshort-src-address-${addr}`).text(addr);
+					}
+					catch(e) {
+						console.log(e);
+						$(`#reqdeldetshort-src-address-${addr}`).text(NA);
+					}
 				});
 
 				
@@ -566,10 +575,18 @@ $(document).ready(() => {
 						$(`#reqdeldetshort-dst-address-${addr}`).text(NA);
 						return;
 					}
-					let encodedLoc = res.toString();
-					let g = decodeCoord(encodedLoc);
-					console.log(g);
-					$(`#reqdeldetshort-dst-address-${addr}`).text('New York');
+					try {
+						let encodedLoc = res.toString();
+						let coords = decodeCoord(encodedLoc);
+						let coordStr = `${coords.latitude},${coords.longitude}`;
+				    	let resp = await $.get(`/api/maps/coordsToAddr?coords=${coordStr}`);
+				    	let addr = resp["Response"]["View"][0]["Result"][0]["Location"]["Address"]["Label"];
+						$(`#reqdeldetshort-dst-address-${addr}`).text(addr);
+					}
+					catch(e) {
+						console.log(e);
+						$(`#reqdeldetshort-dst-address-${addr}`).text(NA);
+					}
 				});
 
 				
