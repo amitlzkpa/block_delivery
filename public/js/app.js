@@ -340,12 +340,9 @@ $(document).ready(() => {
 			let encodedLoc = res.toString();
 			let coords = decodeCoord(encodedLoc);
 			let coordStr = `${coords.latitude},${coords.longitude}`;
-			console.log(coordStr);
-	    	let addr = await $.get(`/api/maps/coordsToAddr?coords=${coordStr}`);
-	    	// ----------------------------------CONTINUE HERE
-	    	// console.log(addr.Response);
-			// console.log(addr);
-			// $('#reqdeldet-src-address').text('London');
+	    	let resp = await $.get(`/api/maps/coordsToAddr?coords=${coordStr}`);
+	    	let addr = resp["Response"]["View"][0]["Result"][0]["Location"]["Address"]["Label"];
+			$('#reqdeldet-src-address').text(addr);
 		});
 
 		
@@ -357,13 +354,15 @@ $(document).ready(() => {
 				return;
 			}
 			let encodedLoc = res.toString();
-			let g = decodeCoord(encodedLoc);
-			// console.log(g);
-			$('#reqdeldet-dst-address').text(`New York`);
+			let coords = decodeCoord(encodedLoc);
+			let coordStr = `${coords.latitude},${coords.longitude}`;
+	    	let resp = await $.get(`/api/maps/coordsToAddr?coords=${coordStr}`);
+	    	let addr = resp["Response"]["View"][0]["Result"][0]["Location"]["Address"]["Label"];
+			$('#reqdeldet-dst-address').text(addr);
 		});
-
 		
-			
+		
+		
 		contract.amount.call(async (err, res) => {
 			let curr = 'USD';
 			$('#reqdeldet-currency').text(curr);

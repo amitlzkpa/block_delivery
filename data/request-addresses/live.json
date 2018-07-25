@@ -11,6 +11,10 @@
         {
             "owner_addr": "0x508a6c0f1c3fcc940d89b74a940518c06ac2c6bf",
             "contract_addr": "0x535e8eef020a1cb3c911b167de2b43ac1dab97a2"
+        },
+        {
+            "owner_addr": "0x1ef1d33d1e6530deff635ed6f5d648a4ae15943b",
+            "contract_addr": "0xa98af8f8551864a162b3e5ada733b43953d89379"
         }
     ]
 }
