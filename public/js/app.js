@@ -265,7 +265,7 @@ $(document).ready(() => {
 
 	reqDeliveryDetailsTemplate.init = async () => {
 
-		let addr = '0xca26eaf55a8427e4d0f3f5e51fc426f5584de9f2';
+		let addr = '0x3ea2bfdf188bedd5f65b1d99eb504f46d387d2f9';
 		console.log(`Address: ${addr}`);
 
 
@@ -553,8 +553,8 @@ $(document).ready(() => {
 						$(`#reqdeldetshort-src-address-${addr}`).text(NA);
 						return;
 					}
+					let encodedLoc = res.toString();
 					try {
-						let encodedLoc = res.toString();
 						let coords = decodeCoord(encodedLoc);
 						let coordStr = `${coords.latitude},${coords.longitude}`;
 				    	let resp = await $.get(`/api/maps/coordsToAddr?coords=${coordStr}`);
@@ -562,6 +562,7 @@ $(document).ready(() => {
 						$(`#reqdeldetshort-src-address-${addr}`).text(addr);
 					}
 					catch(e) {
+						console.log(encodedLoc);
 						console.log(e);
 						$(`#reqdeldetshort-src-address-${addr}`).text(NA);
 					}
@@ -575,8 +576,8 @@ $(document).ready(() => {
 						$(`#reqdeldetshort-dst-address-${addr}`).text(NA);
 						return;
 					}
+					let encodedLoc = res.toString();
 					try {
-						let encodedLoc = res.toString();
 						let coords = decodeCoord(encodedLoc);
 						let coordStr = `${coords.latitude},${coords.longitude}`;
 				    	let resp = await $.get(`/api/maps/coordsToAddr?coords=${coordStr}`);
@@ -584,6 +585,7 @@ $(document).ready(() => {
 						$(`#reqdeldetshort-dst-address-${addr}`).text(addr);
 					}
 					catch(e) {
+						console.log(encodedLoc);
 						console.log(e);
 						$(`#reqdeldetshort-dst-address-${addr}`).text(NA);
 					}
