@@ -173,20 +173,24 @@
             <p>Address: <span id="reqdeldetshort-addr-address" class="grey-text">{{ contract_address }}</span></p>
             <p>Status: <span id="reqdeldetshort-status-{{ contract_address }}" class="grey-text"></span></p>
             
-            <p>Start Address</p>
+            <p>Start Address: </p>
             <p id="reqdeldetshort-src-address-{{ contract_address }}"></p>
 
-            <p>Destination Address</p>
+            <p>Destination Address: </p>
             <p id="reqdeldetshort-dst-address-{{ contract_address }}"></p>
 
-            <p>Amount</p>
-            <p>
-              <span id="reqdeldetshort-amount-{{ contract_address }}"></span>&nbsp;
-              <span id="reqdeldetshort-currency-{{ contract_address }}">ETH</span>
+            <p>Amount: 
+              <span>
+                <span id="reqdeldetshort-amount-{{ contract_address }}"></span>&nbsp;
+                <span id="reqdeldetshort-currency-{{ contract_address }}">ETH</span>
+              </span>
             </p>
 
-            <p>Ride Size</p>
-            <p id="reqdeldetshort-ride-size-{{ contract_address }}"></p>
+            <p>Ride Size
+              <span id="reqdeldetshort-ride-size-{{ contract_address }}"></span>
+            </p>
+
+            <a href="/request-details" class="btn" style="width: 100%; margin: 4px;">VIEW</a>
           </div>
 
         </div>

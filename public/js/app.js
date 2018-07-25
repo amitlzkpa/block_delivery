@@ -650,9 +650,6 @@ $(document).ready(() => {
 	router.add('/', () => {
 		let html = homeTemplate();
 		el.html(html);
-		// let html = reqDeliveryDetailsTemplate();
-		// el.html(html);
-		// reqDeliveryDetailsTemplate.init();
 	});
 
 
