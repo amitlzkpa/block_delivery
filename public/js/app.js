@@ -133,6 +133,7 @@ $(document).ready(() => {
 	const reqDeliveryTemplate = Handlebars.compile($('#reqest-delivery-template').html());
 	const reqDeliveryDetailsTemplate = Handlebars.compile($('#reqest-delivery-details-template').html());
 	const liveRequestsTemplate = Handlebars.compile($('#reqests-live-template').html());
+	const orderRequestsTemplate = Handlebars.compile($('#orders-live-template').html());
 
 	const abiDefinitionStr = '[{"constant":false,"inputs":[],"name":"bid","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"code","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"amt","type":"uint256"},{"name":"src","type":"int256"},{"name":"dst","type":"int256"},{"name":"mssg","type":"bytes32"}],"name":"init","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"getBidCount","outputs":[{"name":"count","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"deadline","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"assigned_to","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"claim","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"bids","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"source","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"assignee","type":"address"}],"name":"assign","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"bid_security","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"completed","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"amount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"id","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"destination","outputs":[{"name":"","type":"int256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"request_security","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"bidders","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"mark_complete","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"message","outputs":[{"name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"deadln","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"deadline","type":"uint256"},{"indexed":false,"name":"src","type":"int256"},{"indexed":false,"name":"destination","type":"int256"},{"indexed":false,"name":"amount","type":"uint256"},{"indexed":false,"name":"message","type":"bytes32"}],"name":"Init","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"bidder","type":"address"}],"name":"Bid","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"assignee","type":"address"}],"name":"AssignedTo","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"amount","type":"uint256"}],"name":"MarkedComplete","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"claimant","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"Claimed","type":"event"}]';
 	const abiDefinition = JSON.parse(abiDefinitionStr);
@@ -616,6 +617,27 @@ $(document).ready(() => {
 
 
 
+	orderRequestsTemplate.init = async () => {
+
+		$('#update-orders-list-btn').on('click', async (e) => {
+			e.preventDefault();
+			let orderList = await $.get(`/api/orders-list/`);
+			let html = orderRequestsTemplate();
+			el.html(html);
+			let $ordersListContainer = $('#orders-list-container');
+			$ordersListContainer.empty();
+			for(let i = 0; i<orderList.length; i++) {
+				let orderDetailsShortTemplate = Handlebars.compile($('#order-details-short-template').html());
+				let html2 = orderDetailsShortTemplate(orderList[i]);
+				$ordersListContainer.append(html2);
+				$ordersListContainer.append(`<hr>`);
+			}
+
+		});
+	}
+
+
+
 
 	// Routing
 	const router = new Router({
@@ -647,11 +669,16 @@ $(document).ready(() => {
 		liveRequestsTemplate.init();
 	});
 
+	router.add('/orders-live/', (addr) => {
+		let html = orderRequestsTemplate();
+		el.html(html);
+		orderRequestsTemplate.init();
+	});
+
 	router.add('/', () => {
 		let html = homeTemplate();
 		el.html(html);
 	});
-
 
 
 

@@ -3,6 +3,8 @@ const express = require('express');
 const fs = require('fs');
 const { autocomplete, addrToCoords, coordsToAddr } = require('./lib/heremaps-mirror');
 const { requests_list } = require('./lib/o-lap-data');
+const { orders_list } = require('./lib/orders_list');
+
 
 
 const app = express();
@@ -15,6 +17,17 @@ app.use(express.static('public'));
 
 // Allow front-end access to node_modules folder
 app.use('/scripts', express.static(`${__dirname}/node_modules/`));
+
+
+app.get('/api/orders-list/', async (req, res) => {
+  try {
+    const data = await orders_list();
+    res.setHeader('Content-Type', 'application/json');
+    res.send(data);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 
 app.get('/api/requests-list/', async (req, res) => {
